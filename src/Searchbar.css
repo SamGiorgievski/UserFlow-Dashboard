@@ -1,0 +1,16 @@
+.searchBar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 30px;
+}
+
+.searchBox {
+  margin: 10px;
+  width:80%;
+}
+
+.createProfileButton {
+  margin-left: 10px;
+  padding-left: 10px;
+}
