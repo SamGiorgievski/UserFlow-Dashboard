@@ -34,11 +34,10 @@ function GetAllProfiles() {
         <img 
         src={image_url}
         alt={id} 
-
         className="profileImgs"
         />
         {first_name}
-        </TableCell>
+      </TableCell>
       <TableCell>{id}</TableCell>
       <TableCell>{email}</TableCell>
       <TableCell>{description}</TableCell>

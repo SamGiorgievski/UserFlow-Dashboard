@@ -12,7 +12,6 @@ export default function Profiles() {
             <TableCell> Email </TableCell>
             <TableCell> ID </TableCell>
             <TableCell> Description </TableCell>
-            
           </TableRow>
         </TableHead>
         <TableBody>
