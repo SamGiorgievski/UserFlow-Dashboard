@@ -1,4 +1,5 @@
 import { useQuery, gql } from '@apollo/client';
+import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, TableSortLabel, Toolbar, Typography, Paper, Checkbox, IconButton, Tooltip, FormControlLabel, Switch, DeleteIcon, FilterListIcon } from '@mui/material';
 
 const getProfiles = gql`
 query GetAllProfiles($orderBy: globalOrderBy, $searchString: String, $rows: Int, $page: Int) {
@@ -27,13 +28,12 @@ function GetAllProfiles() {
 
   return data.getAllProfiles.profiles.map(({ description, email, first_name, id, image_url, is_verified, last_name, __typename
   }) => (
-    <div key={id}>
-      <h3>{first_name}</h3>
-      {/* <img width="400" height="250" alt="location-reference" src={`${photo}`} /> */}
-      <br />
-      <p>{email}</p>
-      <br />
-    </div>
+    <TableRow key={id}>
+      <TableCell>{first_name}</TableCell>
+      <TableCell>{id}</TableCell>
+      <TableCell>{email}</TableCell>
+      <TableCell>{description}</TableCell>
+    </TableRow>
   ));
 }
 

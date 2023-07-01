@@ -1,15 +1,27 @@
 import './App.css';
 import GetAllProfiles from './helpers/getAllProfiles';
+import Profiles from './helpers/Profiles';
+import Navbar from './Navbar';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
 
 function App() {
 
+  const darkTheme = createTheme({
+    palette: {
+      mode: 'dark',
+    },
+  });
+
 
   return (
-    <div>
-      <h2>Viral Nation FE Project</h2>
-      <br/>
-      <GetAllProfiles />
-    </div>
+    <ThemeProvider theme={darkTheme}>
+      <CssBaseline />
+      <div>
+        <Navbar />
+        <Profiles />
+      </div>
+    </ThemeProvider>
   );
 }
 
