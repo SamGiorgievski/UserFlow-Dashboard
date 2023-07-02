@@ -1,9 +1,23 @@
 import React from 'react'
-import { Box, Typography, Modal, TextField, Switch, Grid } from '@mui/material';
+import { Box, Typography, Modal, TextField, Switch, Grid, Button } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 
 export default function Profilemodal( { handleOpen, handleClose, open}) {
 
+  const [newProfile, setNewProfile] = React.useState({});
+
+  function handleModalInput(e) {
+    e.preventDefault();
+    // console.log(e.target);
+    const { name, value } = e.target;
+    setNewProfile((prev) => ({
+      ...prev,
+      [name]: value,
+    }))
+
+    console.log(newProfile);
+  }
+  
   const label = { inputProps: { 'aria-label': 'Switch demo' } };
 
   const style = {
@@ -47,46 +61,56 @@ export default function Profilemodal( { handleOpen, handleClose, open}) {
         <Grid item xs={12}>
           <TextField
             required
+            name="image_link"
             id="outlined-required"
-            label="Required"
+            label="Image Link"
             defaultValue="Image link"
             fullWidth
+            onChange={handleModalInput}
           />
         </Grid>
         <Grid item xs={6}>
           <TextField
               required
+              name="first_name"
               id="outlined-required"
-              label="Required"
+              label="First name"
               defaultValue="First Name"
               fullWidth
+              onChange={handleModalInput}
             />
         </Grid>
         <Grid item xs={6}>
             <TextField
               required
+              name="last_name"
               id="outlined-required"
-              label="Required"
+              label="Last name"
               defaultValue="Last Name"
               fullWidth
+              onChange={handleModalInput}
             />
         </Grid>
         <Grid item xs={12}>
           <TextField
             required
+            name="email"
             id="outlined-required"
-            label="Required"
+            label="Email"
             defaultValue="Email"
             fullWidth
+            onChange={handleModalInput}
           />
         </Grid>
         <Grid item xs={12}>
           <TextField
             required
+            name="description"
             id="outlined-required"
-            label="Required"
+            label="Description"
             defaultValue="Description"
             fullWidth
+            onChange={handleModalInput}
           />
         </Grid>
         <Grid item xs={12} >
@@ -97,8 +121,8 @@ export default function Profilemodal( { handleOpen, handleClose, open}) {
             <TextField
               disabled
               id="outlined-disabled"
-              label="Disabled"
-              defaultValue="Hello World"
+              label="Verification"
+              defaultValue="Talent is verified"
               fullWidth
             /> 
             <Switch {...label} defaultChecked />
@@ -106,7 +130,13 @@ export default function Profilemodal( { handleOpen, handleClose, open}) {
         </Grid>
       </Grid>
 
-        
+      <Button 
+      variant="contained" 
+      sx={{
+        position: 'fixed',
+        bottom: 30,
+        right: 30
+      }}> Create Profile </Button>
       </Box>
     </Modal>
   )
