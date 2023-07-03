@@ -1,10 +1,13 @@
 import React from 'react'
 import { Box, Typography, Modal, TextField, Switch, Grid, Button } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
+import createProfileMutation from './helpers/createProfile';
+import { useMutation, gql } from '@apollo/client';
+
 
 export default function Profilemodal( { handleOpen, handleClose, open}) {
 
-  const [newProfile, setNewProfile] = React.useState({});
+  const [newProfile, setNewProfile] = React.useState({isVerified: true});
 
   function handleModalInput(e) {
     e.preventDefault();
@@ -17,6 +20,11 @@ export default function Profilemodal( { handleOpen, handleClose, open}) {
 
     console.log(newProfile);
   }
+
+  
+    const [addProfile, { data, loading, error }] = useMutation(createProfileMutation);
+
+  
   
   const label = { inputProps: { 'aria-label': 'Switch demo' } };
 
@@ -61,7 +69,7 @@ export default function Profilemodal( { handleOpen, handleClose, open}) {
         <Grid item xs={12}>
           <TextField
             required
-            name="image_link"
+            name="imageUrl"
             id="outlined-required"
             label="Image Link"
             defaultValue="Image link"
@@ -72,7 +80,7 @@ export default function Profilemodal( { handleOpen, handleClose, open}) {
         <Grid item xs={6}>
           <TextField
               required
-              name="first_name"
+              name="firstName"
               id="outlined-required"
               label="First name"
               defaultValue="First Name"
@@ -83,7 +91,7 @@ export default function Profilemodal( { handleOpen, handleClose, open}) {
         <Grid item xs={6}>
             <TextField
               required
-              name="last_name"
+              name="lastName"
               id="outlined-required"
               label="Last name"
               defaultValue="Last Name"
@@ -136,7 +144,17 @@ export default function Profilemodal( { handleOpen, handleClose, open}) {
         position: 'fixed',
         bottom: 30,
         right: 30
-      }}> Create Profile </Button>
+      }}
+      onClick={(e) => {
+        e.preventDefault();
+        console.log(newProfile);
+        addProfile({variables: newProfile})
+        handleClose();
+      }
+        
+
+       }
+      > Create Profile </Button>
       </Box>
     </Modal>
   )
