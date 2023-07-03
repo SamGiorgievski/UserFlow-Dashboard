@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useQuery, gql } from '@apollo/client';
 import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, TableSortLabel, Toolbar, Typography, Paper, Checkbox, IconButton, Tooltip, FormControlLabel, Switch, DeleteIcon, FilterListIcon } from '@mui/material';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 
 const getProfiles = gql`
@@ -20,15 +21,20 @@ query GetAllProfiles($orderBy: globalOrderBy, $searchString: String, $rows: Int,
 }
 `;  
 
-function GetAllProfiles( {setProfiles, profiles, page, rowsPerPage} ) {
-  const { loading, error, data } = useQuery(getProfiles, {variables: {rows: 20}});
+function GetAllProfiles( {setProfiles, profiles, page, rowsPerPage, valueToOrderBy, orderDirection} ) {
+  const { loading, error, data } = useQuery(getProfiles, {variables: {
+    rows: 50,
+    orderBy: {
+      key: 'email',
+      sort: 'ASC'
+    }
+  }});
 
 
   useEffect(() => {
     if(data) {
       setProfiles(data.getAllProfiles.profiles);
       console.log(data.getAllProfiles.profiles)
-      console.log(profiles);
     }
     
   }, [data])
@@ -37,7 +43,38 @@ function GetAllProfiles( {setProfiles, profiles, page, rowsPerPage} ) {
   if (error) return <p>Error : {error.message}</p>;
 
 if (data) {
-  return data.getAllProfiles.profiles.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(
+
+function descendingComparator (a, b, orderBy) {
+  if (b[orderBy] < a[orderBy]) {
+    return -1
+  }
+  if (b[orderBy] > a[orderBy]) {
+    return 1
+  }
+  return 0
+}
+
+function getComparator (order, orderBy) {
+  return order === "desc"
+    ? (a,b) => descendingComparator (a, b, orderBy)
+    : (a,b) => -descendingComparator(a, b, orderBy)
+}
+
+  const sortedRowInformation = (rowArray, comparator) => {
+    const stabilizedRowArray = rowArray.map((el, index) => [el, index])
+    stabilizedRowArray.sort((a,b) => {
+      const order = comparator(a[0], b[0])
+      if(order !==0) return order
+      return a[1] - b[1]
+    })
+    return stabilizedRowArray.map((el) => el[0])
+  }
+
+  const sorted = sortedRowInformation(data.getAllProfiles.profiles, getComparator(orderDirection, valueToOrderBy));
+
+  console.log(sorted);
+
+  return sorted.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(
     ({ description, 
       email, 
       first_name, 
@@ -58,7 +95,7 @@ if (data) {
       <TableCell>{id}</TableCell>
       <TableCell>{email}</TableCell>
       <TableCell>{description}</TableCell>
-      <TableCell>{is_verified}</TableCell>
+      <TableCell> <MoreVertIcon /> </TableCell>
     </TableRow>
   ));
 }

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useQuery, gql } from '@apollo/client';
 import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TableFooter, TablePagination, TableRow, TableSortLabel, Toolbar, Typography, Paper, Checkbox, IconButton, Tooltip, FormControlLabel, Switch, DeleteIcon, FilterListIcon } from '@mui/material';
 import { FirstPageIcon, KeyboardArrowLeft, KeyboardArrowRight, LastPageIcon } from '@mui/icons-material';
+import SettingsIcon from '@mui/icons-material/Settings';
 import { GetAllProfiles, getProfiles } from './helpers/getAllProfiles';
 import './Profiles.css';
 import TablePaginationActions from './Pagination';
@@ -15,6 +16,19 @@ export default function Profiles() {
     page: 0,
     rowsPerPage: 10
   });
+  const [orderDirection, setOrderDirection] = React.useState("asc");
+  const [valueToOrderBy, setValueToOrderBy] = React.useState("email");
+
+
+  const handleRequestSort = (event, property) => {
+    const isAscending = (valueToOrderBy === property && orderDirection === 'asc')
+    setValueToOrderBy(property)
+    setOrderDirection(isAscending ? 'desc' : 'asc')
+  }
+
+  const createSortHandler = (property) => (event) => {
+    handleRequestSort(event, property)
+  }
 
   const handleChangePage = (event, newPage) => {
     setPaginationOps(prev => ({
@@ -49,10 +63,18 @@ export default function Profiles() {
         <TableHead>
           <TableRow>
             <TableCell> Name </TableCell>
-            <TableCell> Email </TableCell>
             <TableCell> ID </TableCell>
+            <TableCell> 
+              <TableSortLabel
+                active={valueToOrderBy === "email"}
+                direction={valueToOrderBy === "email" ? orderDirection: "asc"}
+                onClick={createSortHandler("email")}
+              >
+                Email 
+              </TableSortLabel>
+            </TableCell>
             <TableCell> Description </TableCell>
-            <TableCell> Verified? </TableCell>
+            <TableCell> <SettingsIcon /> </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -62,6 +84,8 @@ export default function Profiles() {
           setprofileCount={setprofileCount}
           page={paginationOps.page}
           rowsPerPage={paginationOps.rowsPerPage}
+          orderDirection={orderDirection}
+          valueToOrderBy={valueToOrderBy}
           />
         </TableBody>
         <TableFooter>
