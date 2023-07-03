@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from 'react';
 import { useQuery, gql } from '@apollo/client';
 import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, TableSortLabel, Toolbar, Typography, Paper, Checkbox, IconButton, Tooltip, FormControlLabel, Switch, DeleteIcon, FilterListIcon } from '@mui/material';
 
@@ -19,13 +20,21 @@ query GetAllProfiles($orderBy: globalOrderBy, $searchString: String, $rows: Int,
 }
 `;  
 
-function GetAllProfiles() {
-  const { loading, error, data } = useQuery(getProfiles);
+function GetAllProfiles( {setProfiles, profiles} ) {
+  const { loading, error, data } = useQuery(getProfiles, {variables: {rows: 53}});
+console.log(data);
+
+  useEffect(() => {
+    if(data) {
+      setProfiles(data.getAllProfiles.profiles);
+    }
+    console.log(data);
+    console.log(profiles);
+  }, [data])
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error : {error.message}</p>;
 
-  console.log(data.getAllProfiles.profiles);
 
   return data.getAllProfiles.profiles.map(({ description, email, first_name, id, image_url, is_verified, last_name, __typename
   }) => (
@@ -45,4 +54,4 @@ function GetAllProfiles() {
   ));
 }
 
-export default GetAllProfiles;
+export { GetAllProfiles, getProfiles};

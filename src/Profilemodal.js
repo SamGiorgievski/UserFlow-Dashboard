@@ -11,7 +11,7 @@ export default function Profilemodal( { handleOpen, handleClose, open}) {
 
   function handleModalInput(e) {
     e.preventDefault();
-    // console.log(e.target);
+
     const { name, value } = e.target;
     setNewProfile((prev) => ({
       ...prev,
@@ -24,6 +24,19 @@ export default function Profilemodal( { handleOpen, handleClose, open}) {
   
     const [addProfile, { data, loading, error }] = useMutation(createProfileMutation);
 
+    const handleAddProfile = () => {
+
+      console.log(newProfile);
+
+      addProfile({
+        variables: newProfile
+      })
+      if (error) {
+        console.log(error);
+      }
+
+      handleClose();
+    }
   
   
   const label = { inputProps: { 'aria-label': 'Switch demo' } };
@@ -145,15 +158,7 @@ export default function Profilemodal( { handleOpen, handleClose, open}) {
         bottom: 30,
         right: 30
       }}
-      onClick={(e) => {
-        e.preventDefault();
-        console.log(newProfile);
-        addProfile({variables: newProfile})
-        handleClose();
-      }
-        
-
-       }
+      onClick={handleAddProfile}
       > Create Profile </Button>
       </Box>
     </Modal>
