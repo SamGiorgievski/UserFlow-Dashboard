@@ -20,23 +20,31 @@ query GetAllProfiles($orderBy: globalOrderBy, $searchString: String, $rows: Int,
 }
 `;  
 
-function GetAllProfiles( {setProfiles, profiles} ) {
-  const { loading, error, data } = useQuery(getProfiles, {variables: {rows: 53}});
-console.log(data);
+function GetAllProfiles( {setProfiles, profiles, page, rowsPerPage} ) {
+  const { loading, error, data } = useQuery(getProfiles, {variables: {rows: 20}});
+
 
   useEffect(() => {
     if(data) {
       setProfiles(data.getAllProfiles.profiles);
+      console.log(data.getAllProfiles.profiles)
+      console.log(profiles);
     }
-    console.log(data);
-    console.log(profiles);
+    
   }, [data])
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error : {error.message}</p>;
 
-
-  return data.getAllProfiles.profiles.map(({ description, email, first_name, id, image_url, is_verified, last_name, __typename
+if (data) {
+  return data.getAllProfiles.profiles.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(
+    ({ description, 
+      email, 
+      first_name, 
+      id, 
+      image_url, 
+      is_verified, 
+      last_name, __typename
   }) => (
     <TableRow key={id}>
       <TableCell>
@@ -45,13 +53,15 @@ console.log(data);
         alt={id} 
         className="profileImgs"
         />
-        {first_name}
+        {`${first_name} + ${last_name}`}
       </TableCell>
       <TableCell>{id}</TableCell>
       <TableCell>{email}</TableCell>
       <TableCell>{description}</TableCell>
+      <TableCell>{is_verified}</TableCell>
     </TableRow>
   ));
+}
 }
 
 export { GetAllProfiles, getProfiles};
