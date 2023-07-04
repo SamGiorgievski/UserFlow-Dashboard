@@ -22,8 +22,18 @@ export default function Searchbar() {
         autoComplete="off"
       >
       </Box>
-      <TextField id="outlined-basic" label="Search" variant="outlined" className="searchBox" />
-      <Button variant="outlined" className="createProfileButton" onClick={handleOpen}>Create profile</Button>
+
+      <TextField 
+      id="outlined-basic" 
+      label="Search" 
+      variant="outlined" 
+      className="searchBox" 
+      />
+
+      <Button 
+      variant="outlined" 
+      className="createProfileButton" 
+      onClick={handleOpen}>Create profile</Button>
 
       <Profilemodal 
       handleOpen={handleOpen}
@@ -35,10 +45,15 @@ export default function Searchbar() {
       exclusive
       aria-label="text alignment"
       >
-        <ToggleButton value="left" aria-label="left aligned">
+        <ToggleButton value="left" 
+        aria-label="left aligned"
+        >
           <ViewWeekIcon />
         </ToggleButton>
-        <ToggleButton value="center" aria-label="centered">
+        <ToggleButton 
+        value="center" 
+        aria-label="centered"
+        >
           <ViewListIcon />
         </ToggleButton>
       </ToggleButtonGroup>
