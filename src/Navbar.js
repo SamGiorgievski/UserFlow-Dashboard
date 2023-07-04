@@ -1,4 +1,3 @@
-import './Navbar.css';
 import { AppBar, Box, Toolbar, Typography, Button, Switch } from '@mui/material';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
