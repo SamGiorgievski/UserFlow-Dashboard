@@ -115,7 +115,7 @@ function App() {
       setSelectedProfile(handleSelectedProfile(profiles, anchorEl.id));
     }
 
-  }, [profiles]);
+  }, [profiles, anchorEl]);
 
 
   return (

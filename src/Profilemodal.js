@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Box, Typography, Modal, TextField, Switch, Grid, Button } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import createProfileMutation from './helpers/createProfile';
@@ -9,7 +9,9 @@ import { getProfiles } from './helpers/getAllProfiles';
 
 export default function Profilemodal( { handleOpen, handleClose, open, anchorEl, selectedProfile}) {
 
-  const [newProfile, setNewProfile] = React.useState({isVerified: true});
+  const [newProfile, setNewProfile] = React.useState({
+    isVerified: true
+  });
 
   // Create profile
   const [addProfile, { data, loading, error }] = useMutation(createProfileMutation, {
@@ -36,13 +38,12 @@ export default function Profilemodal( { handleOpen, handleClose, open, anchorEl,
     updateProfile({
       variables: {
         updateProfileId: selectedProfile.id,
-        firstName: "Bob",
-        lastName: "Bobby",
-        email: "bob@bob.com",
+        firstName: newProfile.firstName ? newProfile.firstName : selectedProfile.first_name,
+        lastName: newProfile.lastName ? newProfile.lastName : selectedProfile.last_name,
+        email: newProfile.email ? newProfile.email : selectedProfile.email,
         isVerified: true,
-        imageUrl: "bob.com",
-        description: "bob"
-
+        imageUrl: newProfile.imageUrl ? newProfile.imageUrl : selectedProfile.image_url,
+        description: newProfile.description ? newProfile.description : selectedProfile.description
       }
     })
     
@@ -51,6 +52,7 @@ export default function Profilemodal( { handleOpen, handleClose, open, anchorEl,
   }
 
   // Edit profile
+
   const [updateProfile] = useMutation(updateProfileMutation, {
     refetchQueries: [
       getProfiles, // DocumentNode object parsed with gql

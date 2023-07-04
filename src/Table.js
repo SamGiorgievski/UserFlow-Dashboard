@@ -56,7 +56,6 @@ function getComparator (order, orderBy) {
 
   const sorted = sortedRowInformation(data.getAllProfiles.profiles, getComparator(orderDirection, valueToOrderBy));
 
-  console.log(sorted);
 
   return sorted.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(
     ({ description, 
