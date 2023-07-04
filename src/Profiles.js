@@ -21,9 +21,22 @@ export default function Profiles() {
   const [orderDirection, setOrderDirection] = React.useState("asc");
   const [valueToOrderBy, setValueToOrderBy] = React.useState("email");
   const [openDelete, setOpenDelete] = React.useState(false);
+  const [anchorEl, setAnchorEl] = React.useState(null);
 
-  const handleOpenDelete = () => setOpenDelete(true);
-  const handleCloseDelete = () => setOpenDelete(false);
+  const handleOpenDelete = () => {setOpenDelete(true);};
+  const handleCloseDelete = () => {
+    setOpenDelete(false);
+    setAnchorEl(null);
+  };
+
+  const handleSettingsOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleSettingsClose = () => {
+    setAnchorEl(null);
+    console.log(anchorEl);
+  };
 
   const handleRequestSort = (event, property) => {
     const isAscending = (valueToOrderBy === property && orderDirection === 'asc')
@@ -93,6 +106,9 @@ export default function Profiles() {
             orderDirection={orderDirection}
             valueToOrderBy={valueToOrderBy}
             handleOpenDelete={handleOpenDelete}
+            handleSettingsOpen={handleSettingsOpen}
+            handleSettingsClose={handleSettingsClose}
+            anchorEl={anchorEl}
             />
           </TableBody>
           <TableFooter>
@@ -116,13 +132,16 @@ export default function Profiles() {
           </TableFooter>
         </Table>
       </TableContainer>
+
       <DeleteModal 
       openDelete={openDelete}
       setOpenDelete={setOpenDelete}
       handleOpenDelete={handleOpenDelete}
       handleCloseDelete={handleCloseDelete}
+      anchorEl={anchorEl}
       open={openDelete}
       />
+
     </>
   )
 }

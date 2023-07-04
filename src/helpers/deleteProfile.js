@@ -1,8 +1,8 @@
 import { useMutation, gql } from '@apollo/client';
 
-const updateProfileMutation = gql`
+const deleteProfileMutation = gql`
 mutation DeleteProfile($deleteProfileId: String!) {
   deleteProfile(id: $deleteProfileId)
 }`;
 
-export default updateProfileMutation;
+export default deleteProfileMutation;

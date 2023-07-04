@@ -4,7 +4,7 @@ import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TablePagin
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { getProfiles } from './helpers/getAllProfiles';
 
-function GetAllProfiles( {setProfiles, profiles, page, rowsPerPage, valueToOrderBy, orderDirection, handleOpenDelete} ) {
+function GetAllProfiles( {setProfiles, profiles, page, rowsPerPage, valueToOrderBy, orderDirection, handleOpenDelete, anchorEl, handleSettingsOpen, handleSettingsClose} ) {
   const { loading, error, data } = useQuery(getProfiles, {variables: {
     rows: 500,
     orderBy: {
@@ -13,17 +13,7 @@ function GetAllProfiles( {setProfiles, profiles, page, rowsPerPage, valueToOrder
     }
   }});
 
-  const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
-
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-    console.log(anchorEl);
-  };
 
   useEffect(() => {
     if(data) {
@@ -95,7 +85,7 @@ function getComparator (order, orderBy) {
         aria-controls={open ? {id} : undefined}
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
-        onClick={handleClick}
+        onClick={handleSettingsOpen}
         >
           Settings
           </Button>
@@ -104,12 +94,12 @@ function getComparator (order, orderBy) {
             id="basic-menu" 
             anchorEl={anchorEl}
             open={Boolean(anchorEl)}
-            onClose={handleClose}
+            onClose={handleSettingsClose}
             MenuListProps={{
               'aria-labelledby': 'basic-button',
             }}
             >
-              <MenuItem onClick={handleClose}> Edit </MenuItem>
+              <MenuItem onClick={handleSettingsClose}> Edit </MenuItem>
               <MenuItem onClick={handleOpenDelete}> Delete </MenuItem>
             </Menu>
           

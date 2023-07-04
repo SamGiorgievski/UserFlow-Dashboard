@@ -1,9 +1,25 @@
 import React from 'react'
 import { Box, Typography, Modal, Button } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
+import deleteProfileMutation from './helpers/deleteProfile';
+import { useMutation, gql } from '@apollo/client';
+import { getProfiles } from './helpers/getAllProfiles';
 
-export default function DeleteModal({ openDelete, setOpenDelete, handleOpenDelete, handleCloseDelete } ) {
+export default function DeleteModal({ openDelete, setOpenDelete, handleOpenDelete, handleCloseDelete, anchorEl } ) {
 
+    const [deleteProfile, { data, loading, error }] = useMutation(deleteProfileMutation, {
+      refetchQueries: [
+        getProfiles, // DocumentNode object parsed with gql
+        'GetAllProfiles' 
+      ]
+    });
+
+  const handleConfirmDelete = () => {
+    deleteProfile({variables: {
+      deleteProfileId: anchorEl.id
+    }});
+    handleCloseDelete();
+  }
 
   const style = {
     position: 'absolute',
@@ -65,7 +81,7 @@ export default function DeleteModal({ openDelete, setOpenDelete, handleOpenDelet
           bottom: 30,
           right: 30
         }}
-        onClick={handleCloseDelete}
+        onClick={handleConfirmDelete}
       > Delete </Button>
       </Box>
     </Modal>
