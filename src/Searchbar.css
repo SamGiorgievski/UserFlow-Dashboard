@@ -2,12 +2,14 @@
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: space-between;
   margin: 30px;
+  width: 90%
 }
 
 .searchBox {
   margin: 10px;
-  width:80%;
+  width:70%;
 }
 
 .createProfileButton {

@@ -16,7 +16,7 @@ export default function Searchbar( { openCreate, setOpenCreate, handleOpenCreate
       <Box
         component="form"
         sx={{
-          '& > :not(style)': { m: 1, width: '25ch' },
+          '& > :not(style)': { m: 1, width: '25ch' }
         }}
         noValidate
         autoComplete="off"
@@ -29,6 +29,7 @@ export default function Searchbar( { openCreate, setOpenCreate, handleOpenCreate
       variant="outlined" 
       className="searchBox" 
       onChange={handleSearchInput}
+      
       />
 
       <Button 
