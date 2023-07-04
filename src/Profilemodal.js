@@ -6,7 +6,7 @@ import { useMutation } from '@apollo/client';
 import { getProfiles } from './helpers/getAllProfiles';
 
 
-export default function Profilemodal( { handleOpen, handleClose, open}) {
+export default function Profilemodal( { handleOpen, handleClose, open, anchorEl, selectedProfile}) {
 
   const [newProfile, setNewProfile] = React.useState({isVerified: true});
 
@@ -22,7 +22,6 @@ export default function Profilemodal( { handleOpen, handleClose, open}) {
     console.log(newProfile);
   }
 
-  
     const [addProfile, { data, loading, error }] = useMutation(createProfileMutation, {
       refetchQueries: [
         getProfiles, // DocumentNode object parsed with gql
@@ -78,7 +77,9 @@ export default function Profilemodal( { handleOpen, handleClose, open}) {
           justifyContent: 'space-between',
           marginBottom: '30px'
         }}>
-          Create Profile
+
+          {anchorEl ? "Edit profile" : "Create Profile" }
+
           <CloseIcon onClick={handleClose}/>
         </Typography>
 
@@ -91,7 +92,7 @@ export default function Profilemodal( { handleOpen, handleClose, open}) {
             name="imageUrl"
             id="outlined-required"
             label="Image Link"
-            defaultValue="Image link"
+            defaultValue= {selectedProfile ? selectedProfile.image_url : "" }
             fullWidth
             onChange={handleModalInput}
           />
@@ -102,7 +103,7 @@ export default function Profilemodal( { handleOpen, handleClose, open}) {
               name="firstName"
               id="outlined-required"
               label="First name"
-              defaultValue="First Name"
+              defaultValue={selectedProfile ? selectedProfile.first_name : "" }
               fullWidth
               onChange={handleModalInput}
             />
@@ -113,7 +114,7 @@ export default function Profilemodal( { handleOpen, handleClose, open}) {
               name="lastName"
               id="outlined-required"
               label="Last name"
-              defaultValue="Last Name"
+              defaultValue={selectedProfile ? selectedProfile.last_name : "" }
               fullWidth
               onChange={handleModalInput}
             />
@@ -124,7 +125,7 @@ export default function Profilemodal( { handleOpen, handleClose, open}) {
             name="email"
             id="outlined-required"
             label="Email"
-            defaultValue="Email"
+            defaultValue={selectedProfile ? selectedProfile.email : "" }
             fullWidth
             onChange={handleModalInput}
           />
@@ -135,7 +136,7 @@ export default function Profilemodal( { handleOpen, handleClose, open}) {
             name="description"
             id="outlined-required"
             label="Description"
-            defaultValue="Description"
+            defaultValue={selectedProfile ? selectedProfile.description : "" }
             fullWidth
             onChange={handleModalInput}
           />

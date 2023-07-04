@@ -4,7 +4,7 @@ import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TablePagin
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { getProfiles } from './helpers/getAllProfiles';
 
-function GetAllProfiles( {setProfiles, profiles, page, rowsPerPage, valueToOrderBy, orderDirection, handleOpenDelete, anchorEl, handleSettingsOpen, handleSettingsClose} ) {
+function GetAllProfiles( {setProfiles, profiles, page, rowsPerPage, valueToOrderBy, orderDirection, handleOpenDelete, anchorEl, handleSettingsOpen, handleSettingsClose, handleOpenCreate} ) {
   const { loading, error, data } = useQuery(getProfiles, {variables: {
     rows: 500,
     orderBy: {
@@ -99,7 +99,7 @@ function getComparator (order, orderBy) {
               'aria-labelledby': 'basic-button',
             }}
             >
-              <MenuItem onClick={handleSettingsClose}> Edit </MenuItem>
+              <MenuItem onClick={handleOpenCreate}> Edit </MenuItem>
               <MenuItem onClick={handleOpenDelete}> Delete </MenuItem>
             </Menu>
           

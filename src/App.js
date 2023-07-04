@@ -4,8 +4,7 @@ import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TableFoote
 import SettingsIcon from '@mui/icons-material/Settings';
 import { GetAllProfiles } from './Table';
 import DeleteModal from './DeleteModal';
-
-
+import Profilemodal from './Profilemodal';
 import Navbar from './Navbar';
 import Searchbar from './Searchbar';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
@@ -29,17 +28,35 @@ function App() {
   const [orderDirection, setOrderDirection] = React.useState("asc");
   const [valueToOrderBy, setValueToOrderBy] = React.useState("email");
   const [openDelete, setOpenDelete] = React.useState(false);
-  const [openEdit, setOpenEdit] = React.useState(false);
   const [openCreate, setOpenCreate] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [selectedProfile, setSelectedProfile] = React.useState(null);
 
-  // Create
-  const handleOpenCreate = () => setOpenCreate(true);
-  const handleCloseCreate = () => setOpenCreate(false);
 
-  // Edit
-  const handleOpenEdit = () => setOpenEdit(true);
-  const handleCloseEdit = () => setOpenEdit(false);
+
+  function handleSelectedProfile(array, value) {
+    for (let i = 0; i < array.length; i++) {
+      if (array[i].id === value) {
+        return array[i];
+      }
+    }
+    return null; 
+  }
+
+
+  // Create / Edit
+  const handleOpenCreate = () => { 
+    if (anchorEl) {
+      setSelectedProfile(handleSelectedProfile(profiles, anchorEl.id));
+    }
+
+    setOpenCreate(true);
+   }
+  const handleCloseCreate = () => {
+    setOpenCreate(false);
+    handleSettingsClose();
+  };
+
 
   // Delete
   const handleOpenDelete = () => {setOpenDelete(true);};
@@ -55,7 +72,7 @@ function App() {
 
   const handleSettingsClose = () => {
     setAnchorEl(null);
-    console.log(anchorEl);
+    setSelectedProfile(null);
   };
 
   // Sort
@@ -93,6 +110,10 @@ function App() {
       ...prev,
       count: profiles.length
     }))
+
+    if (anchorEl) {
+      setSelectedProfile(handleSelectedProfile(profiles, anchorEl.id));
+    }
 
   }, [profiles]);
 
@@ -141,6 +162,7 @@ function App() {
             handleSettingsOpen={handleSettingsOpen}
             handleSettingsClose={handleSettingsClose}
             anchorEl={anchorEl}
+            handleOpenCreate={handleOpenCreate}
             />
           </TableBody>
           <TableFooter>
@@ -172,6 +194,14 @@ function App() {
       handleCloseDelete={handleCloseDelete}
       anchorEl={anchorEl}
       open={openDelete}
+      />
+
+      <Profilemodal 
+      handleOpen={handleOpenCreate}
+      handleClose={handleCloseCreate}
+      open={openCreate}
+      anchorEl={anchorEl}
+      selectedProfile={selectedProfile}
       />
 
       </div>

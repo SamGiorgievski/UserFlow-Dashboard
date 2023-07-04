@@ -35,12 +35,6 @@ export default function Searchbar( { openCreate, setOpenCreate, handleOpenCreate
       className="createProfileButton" 
       onClick={handleOpenCreate}>Create profile</Button>
 
-      <Profilemodal 
-      handleOpen={handleOpenCreate}
-      handleClose={handleCloseCreate}
-      open={openCreate}
-      />
-
       <ToggleButtonGroup
       exclusive
       aria-label="text alignment"
