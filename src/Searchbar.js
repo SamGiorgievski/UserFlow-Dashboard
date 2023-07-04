@@ -1,11 +1,11 @@
 import React from 'react'
 import './Searchbar.css';
-import { TextField, Box, Button, ToggleButtonGroup, ToggleButton, Typography, Modal } from '@mui/material';
+import { TextField, Box, Button, ToggleButtonGroup, ToggleButton} from '@mui/material';
 import ViewWeekIcon from '@mui/icons-material/ViewWeek';
 import ViewListIcon from '@mui/icons-material/ViewList';
 import Profilemodal from './Profilemodal';
 
-export default function Searchbar() {
+export default function Searchbar( { openCreate, setOpenCreate, handleOpenCreate, handleCloseCreate }) {
 
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -33,12 +33,12 @@ export default function Searchbar() {
       <Button 
       variant="outlined" 
       className="createProfileButton" 
-      onClick={handleOpen}>Create profile</Button>
+      onClick={handleOpenCreate}>Create profile</Button>
 
       <Profilemodal 
-      handleOpen={handleOpen}
-      handleClose={handleClose}
-      open={open}
+      handleOpen={handleOpenCreate}
+      handleClose={handleCloseCreate}
+      open={openCreate}
       />
 
       <ToggleButtonGroup

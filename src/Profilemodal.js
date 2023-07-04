@@ -1,8 +1,9 @@
-import React from 'react'
+import React from 'react';
 import { Box, Typography, Modal, TextField, Switch, Grid, Button } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import createProfileMutation from './helpers/createProfile';
-import { useMutation, gql } from '@apollo/client';
+import { useMutation } from '@apollo/client';
+import { getProfiles } from './helpers/getAllProfiles';
 
 
 export default function Profilemodal( { handleOpen, handleClose, open}) {
@@ -22,7 +23,12 @@ export default function Profilemodal( { handleOpen, handleClose, open}) {
   }
 
   
-    const [addProfile, { data, loading, error }] = useMutation(createProfileMutation);
+    const [addProfile, { data, loading, error }] = useMutation(createProfileMutation, {
+      refetchQueries: [
+        getProfiles, // DocumentNode object parsed with gql
+        'GetAllProfiles' 
+      ]
+    });
 
     const handleAddProfile = () => {
 

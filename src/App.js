@@ -19,7 +19,6 @@ function App() {
     },
   });
 
-
   const [profileCount, setprofileCount] = React.useState(0);
   const [profiles, setProfiles] = React.useState([]);
   const [paginationOps, setPaginationOps] = React.useState({
@@ -31,15 +30,25 @@ function App() {
   const [valueToOrderBy, setValueToOrderBy] = React.useState("email");
   const [openDelete, setOpenDelete] = React.useState(false);
   const [openEdit, setOpenEdit] = React.useState(false);
-
+  const [openCreate, setOpenCreate] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
 
+  // Create
+  const handleOpenCreate = () => setOpenCreate(true);
+  const handleCloseCreate = () => setOpenCreate(false);
+
+  // Edit
+  const handleOpenEdit = () => setOpenEdit(true);
+  const handleCloseEdit = () => setOpenEdit(false);
+
+  // Delete
   const handleOpenDelete = () => {setOpenDelete(true);};
   const handleCloseDelete = () => {
     setOpenDelete(false);
     setAnchorEl(null);
   };
 
+  // Settings
   const handleSettingsOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -49,6 +58,7 @@ function App() {
     console.log(anchorEl);
   };
 
+  // Sort
   const handleRequestSort = (event, property) => {
     const isAscending = (valueToOrderBy === property && orderDirection === 'asc')
     setValueToOrderBy(property)
@@ -59,6 +69,7 @@ function App() {
     handleRequestSort(event, property)
   }
 
+  // pagination
   const handleChangePage = (event, newPage) => {
     setPaginationOps(prev => ({
       ...prev,
@@ -91,7 +102,12 @@ function App() {
       <CssBaseline />
       <div>
         <Navbar />
-        <Searchbar />
+        <Searchbar 
+        openCreate={openCreate}
+        setOpenCreate={setOpenCreate}
+        handleOpenCreate={handleOpenCreate}
+        handleCloseCreate={handleCloseCreate}
+        />
         
         <TableContainer component={Paper} className="listView">
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
