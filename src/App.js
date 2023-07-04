@@ -1,22 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableFooter, TablePagination, TableRow, TableSortLabel, Paper } from '@mui/material';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableFooter, TablePagination, TableRow, TableSortLabel, Paper, useTheme, ThemeProvider, createTheme } from '@mui/material';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { GetAllProfiles } from './Table';
 import DeleteModal from './DeleteModal';
 import Profilemodal from './Profilemodal';
 import Navbar from './Navbar';
 import Searchbar from './Searchbar';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 
 function App() {
 
-  const darkTheme = createTheme({
-    palette: {
-      mode: 'dark',
-    },
-  });
 
   const [profileCount, setprofileCount] = React.useState(0);
   const [profiles, setProfiles] = React.useState([]);
@@ -33,8 +27,35 @@ function App() {
   const [selectedProfile, setSelectedProfile] = React.useState(null);
   const [searchQuery, setSearchQuery] = React.useState(null);
   const [timeoutId, setTimeoutId] = useState(null);
+  const [themeToggle, setThemeToggle] = useState("dark")
 
 
+    // Theme
+    const darkTheme = createTheme({
+      palette: {
+        mode: 'dark',
+      },
+    });
+  
+    const lightTheme = createTheme({
+      palette: {
+        mode: 'light',
+      },
+    });
+  
+  
+  const handleThemeToggle = () => {
+    console.log(themeToggle)
+    setThemeToggle((prev) => (
+      (themeToggle === "dark" ? "light" : "dark")
+      ));
+    console.log(themeToggle)
+  }
+
+  const theme = themeToggle === "dark" ? lightTheme : darkTheme;
+
+ 
+  // Create / Edit
 
   function handleSelectedProfile(array, value) {
     for (let i = 0; i < array.length; i++) {
@@ -45,8 +66,6 @@ function App() {
     return null; 
   }
 
-
-  // Create / Edit
   const handleOpenCreate = () => { 
     if (anchorEl) {
       setSelectedProfile(handleSelectedProfile(profiles, anchorEl.id));
@@ -142,10 +161,14 @@ function App() {
 
 
   return (
-    <ThemeProvider theme={darkTheme}>
+
+    <ThemeProvider theme={theme}>
       <CssBaseline />
       <div>
-        <Navbar />
+        <Navbar 
+        handleThemeToggle={handleThemeToggle}
+        />
+
         <Searchbar 
         openCreate={openCreate}
         setOpenCreate={setOpenCreate}
@@ -162,12 +185,12 @@ function App() {
           width: "80%",
           marginLeft: "auto",
           marginRight: "auto"
-         }} 
+        }} 
         >
         <Table 
         sx={{ 
           minWidth: 650
-         }} 
+        }} 
         aria-label="simple table"
         >
           <TableHead>
@@ -186,7 +209,7 @@ function App() {
               <TableCell
               sx={{ 
                 minWidth: 400
-               }}
+              }}
               > Description </TableCell>
               <TableCell
               sx={{

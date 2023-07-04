@@ -5,9 +5,8 @@ import LightModeIcon from '@mui/icons-material/LightMode';
 
 import React from 'react'
 
-export default function Navbar() {
+export default function Navbar( { handleThemeToggle }) {
 
-  const label = { inputProps: { 'aria-label': 'Switch demo' } };
   
   return (
       <AppBar position="static">
@@ -16,7 +15,11 @@ export default function Navbar() {
             Viralnation
           </Typography>
           <LightModeIcon />
-          <Switch {...label} color="primary" />
+          <Switch 
+          color="primary"
+          defaultChecked
+          onClick={handleThemeToggle}
+          />
           <DarkModeIcon />
         </Toolbar>
       </AppBar>

@@ -40,14 +40,16 @@ export default function Searchbar( { openCreate, setOpenCreate, handleOpenCreate
       <ToggleButtonGroup
       exclusive
       aria-label="text alignment"
+      value="grid"
       >
-        <ToggleButton value="left" 
+        <ToggleButton 
+        value="card" 
         aria-label="left aligned"
         >
           <ViewWeekIcon />
         </ToggleButton>
         <ToggleButton 
-        value="center" 
+        value="grid" 
         aria-label="centered"
         >
           <ViewListIcon />
