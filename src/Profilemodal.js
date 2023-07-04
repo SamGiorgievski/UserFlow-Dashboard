@@ -2,6 +2,7 @@ import React from 'react';
 import { Box, Typography, Modal, TextField, Switch, Grid, Button } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import createProfileMutation from './helpers/createProfile';
+import updateProfileMutation from './helpers/updateProfile';
 import { useMutation } from '@apollo/client';
 import { getProfiles } from './helpers/getAllProfiles';
 
@@ -9,6 +10,54 @@ import { getProfiles } from './helpers/getAllProfiles';
 export default function Profilemodal( { handleOpen, handleClose, open, anchorEl, selectedProfile}) {
 
   const [newProfile, setNewProfile] = React.useState({isVerified: true});
+
+  // Create profile
+  const [addProfile, { data, loading, error }] = useMutation(createProfileMutation, {
+    refetchQueries: [
+      getProfiles, // DocumentNode object parsed with gql
+      'GetAllProfiles' 
+    ]
+  });
+
+  const handleSubmit = () => {
+
+    console.log(newProfile);
+
+    if (!anchorEl) {
+      addProfile({
+        variables: newProfile
+      })
+      if (error) {
+        console.log(error);
+      }
+      return
+    }
+
+    updateProfile({
+      variables: {
+        updateProfileId: selectedProfile.id,
+        firstName: "Bob",
+        lastName: "Bobby",
+        email: "bob@bob.com",
+        isVerified: true,
+        imageUrl: "bob.com",
+        description: "bob"
+
+      }
+    })
+    
+
+    handleClose();
+  }
+
+  // Edit profile
+  const [updateProfile] = useMutation(updateProfileMutation, {
+    refetchQueries: [
+      getProfiles, // DocumentNode object parsed with gql
+      'GetAllProfiles' 
+    ]
+  });
+
 
   function handleModalInput(e) {
     e.preventDefault();
@@ -22,26 +71,8 @@ export default function Profilemodal( { handleOpen, handleClose, open, anchorEl,
     console.log(newProfile);
   }
 
-    const [addProfile, { data, loading, error }] = useMutation(createProfileMutation, {
-      refetchQueries: [
-        getProfiles, // DocumentNode object parsed with gql
-        'GetAllProfiles' 
-      ]
-    });
 
-    const handleAddProfile = () => {
 
-      console.log(newProfile);
-
-      addProfile({
-        variables: newProfile
-      })
-      if (error) {
-        console.log(error);
-      }
-
-      handleClose();
-    }
   
   
   const label = { inputProps: { 'aria-label': 'Switch demo' } };
@@ -165,7 +196,7 @@ export default function Profilemodal( { handleOpen, handleClose, open, anchorEl,
         bottom: 30,
         right: 30
       }}
-      onClick={handleAddProfile}
+      onClick={handleSubmit}
       > Create Profile </Button>
       </Box>
     </Modal>
