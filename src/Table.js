@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useQuery, gql } from '@apollo/client';
-import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, TableSortLabel, Toolbar, Typography, Paper, Checkbox, IconButton, Tooltip, FormControlLabel, Switch, DeleteIcon, FilterListIcon, Select, MenuItem, Menu, Button } from '@mui/material';
+import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, TableSortLabel, Toolbar, Typography, Paper, Checkbox, IconButton, Tooltip, FormControlLabel, Switch, DeleteIcon, FilterListIcon, Select, MenuItem, Menu, Button, Avatar } from '@mui/material';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { getProfiles } from './helpers/getAllProfiles';
 
@@ -68,12 +68,8 @@ function getComparator (order, orderBy) {
   }) => (
     <TableRow key={id}>
       <TableCell>
-        <img 
-        src={image_url}
-        alt={id} 
-        className="profileImgs"
-        />
-        {`${first_name} + ${last_name}`}
+        <Avatar src={image_url}/>
+        {`${first_name} ${last_name}`}
       </TableCell>
       <TableCell>{id}</TableCell>
       <TableCell>{email}</TableCell>
