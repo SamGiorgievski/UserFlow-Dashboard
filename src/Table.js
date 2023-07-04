@@ -4,9 +4,11 @@ import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TablePagin
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { getProfiles } from './helpers/getAllProfiles';
 
-function GetAllProfiles( {setProfiles, profiles, page, rowsPerPage, valueToOrderBy, orderDirection, handleOpenDelete, anchorEl, handleSettingsOpen, handleSettingsClose, handleOpenCreate} ) {
+function GetAllProfiles( {setProfiles, profiles, page, rowsPerPage, valueToOrderBy, orderDirection, handleOpenDelete, anchorEl, handleSettingsOpen, handleSettingsClose, handleOpenCreate, searchQuery} ) {
+
   const { loading, error, data } = useQuery(getProfiles, {variables: {
     rows: 500,
+    searchString: searchQuery,
     orderBy: {
       key: 'email',
       sort: 'ASC',
@@ -18,9 +20,7 @@ function GetAllProfiles( {setProfiles, profiles, page, rowsPerPage, valueToOrder
   useEffect(() => {
     if(data) {
       setProfiles(data.getAllProfiles.profiles);
-
     }
-    
   }, [data])
 
   if (loading) return <p>Loading...</p>;

@@ -31,6 +31,8 @@ function App() {
   const [openCreate, setOpenCreate] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [selectedProfile, setSelectedProfile] = React.useState(null);
+  const [searchQuery, setSearchQuery] = React.useState(null);
+  const [timeoutId, setTimeoutId] = useState(null);
 
 
 
@@ -103,7 +105,6 @@ function App() {
       );
   };
 
-
   useEffect(() => {
 
     setPaginationOps( prev => ({
@@ -117,6 +118,26 @@ function App() {
 
   }, [profiles, anchorEl]);
 
+// search 
+  const handleSearchInput = (event) => {
+    const { value } = event.target;
+    delayedSetState(value);
+  };
+
+  const delayedSetState = (value) => {
+    clearTimeout(timeoutId); 
+    const newTimeoutId = setTimeout(() => {
+      setSearchQuery(value);
+    }, 5000); 
+    setTimeoutId(newTimeoutId);
+  };
+
+  useEffect(() => {
+    return () => {
+      clearTimeout(timeoutId);
+    };
+  }, [timeoutId]);
+
 
   return (
     <ThemeProvider theme={darkTheme}>
@@ -128,6 +149,7 @@ function App() {
         setOpenCreate={setOpenCreate}
         handleOpenCreate={handleOpenCreate}
         handleCloseCreate={handleCloseCreate}
+        handleSearchInput={handleSearchInput}
         />
         
         <TableContainer component={Paper} className="listView">
@@ -163,6 +185,7 @@ function App() {
             handleSettingsClose={handleSettingsClose}
             anchorEl={anchorEl}
             handleOpenCreate={handleOpenCreate}
+            searchQuery={searchQuery}
             />
           </TableBody>
           <TableFooter>

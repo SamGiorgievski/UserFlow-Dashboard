@@ -5,7 +5,7 @@ import ViewWeekIcon from '@mui/icons-material/ViewWeek';
 import ViewListIcon from '@mui/icons-material/ViewList';
 import Profilemodal from './Profilemodal';
 
-export default function Searchbar( { openCreate, setOpenCreate, handleOpenCreate, handleCloseCreate }) {
+export default function Searchbar( { openCreate, setOpenCreate, handleOpenCreate, handleCloseCreate, handleSearchInput }) {
 
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -24,10 +24,11 @@ export default function Searchbar( { openCreate, setOpenCreate, handleOpenCreate
       </Box>
 
       <TextField 
-      id="outlined-basic" 
-      label="Search" 
+      id="search" 
+      label="search" 
       variant="outlined" 
       className="searchBox" 
+      onChange={handleSearchInput}
       />
 
       <Button 
