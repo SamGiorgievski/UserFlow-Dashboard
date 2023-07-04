@@ -52,7 +52,7 @@ function App() {
     console.log(themeToggle)
   }
 
-  const theme = themeToggle === "dark" ? lightTheme : darkTheme;
+  const theme = themeToggle === "dark" ? darkTheme : lightTheme;
 
  
   // Create / Edit
@@ -73,6 +73,7 @@ function App() {
 
     setOpenCreate(true);
    }
+
   const handleCloseCreate = () => {
     setOpenCreate(false);
     handleSettingsClose();
@@ -184,12 +185,13 @@ function App() {
           marginBottom: "30px",
           width: "80%",
           marginLeft: "auto",
-          marginRight: "auto"
+          marginRight: "auto",
+          
         }} 
         >
         <Table 
         sx={{ 
-          minWidth: 650
+          minWidth: 650,
         }} 
         aria-label="simple table"
         >
@@ -237,8 +239,8 @@ function App() {
             searchQuery={searchQuery}
             />
           </TableBody>
-          <TableFooter>
-            <TableRow>
+          <TableFooter >
+            <TableRow >
               <TablePagination
                 rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
                 colSpan={3}
@@ -251,6 +253,7 @@ function App() {
                   },
                   native: true,
                 }}
+                
                 onPageChange={handleChangePage}
                 onRowsPerPageChange={handleChangeRowsPerPage}
                 />
@@ -270,7 +273,7 @@ function App() {
 
       <Profilemodal 
       handleOpen={handleOpenCreate}
-      handleClose={handleCloseCreate}
+      handleCloseCreate={handleCloseCreate}
       open={openCreate}
       anchorEl={anchorEl}
       selectedProfile={selectedProfile}

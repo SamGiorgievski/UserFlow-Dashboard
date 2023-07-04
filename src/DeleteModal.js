@@ -26,8 +26,8 @@ export default function DeleteModal({ openDelete, setOpenDelete, handleOpenDelet
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 600,
-    height: 600,
+    width: 400,
+    height: 300,
     bgcolor: 'background.paper',
     border: '2px solid #000',
     boxShadow: 24,
@@ -51,7 +51,8 @@ export default function DeleteModal({ openDelete, setOpenDelete, handleOpenDelet
           display: 'flex',
           justifyContent: 'space-between',
           marginBottom: '30px'
-        }}>
+        }}
+        >
           Remove Profile
           <CloseIcon onClick={handleCloseDelete}/>
         </Typography>

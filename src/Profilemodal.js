@@ -7,7 +7,7 @@ import { useMutation } from '@apollo/client';
 import { getProfiles } from './helpers/getAllProfiles';
 
 
-export default function Profilemodal( { handleOpen, handleClose, open, anchorEl, selectedProfile}) {
+export default function Profilemodal( { open, anchorEl, selectedProfile, handleCloseCreate}) {
 
   const [newProfile, setNewProfile] = React.useState({
     isVerified: false
@@ -20,11 +20,7 @@ export default function Profilemodal( { handleOpen, handleClose, open, anchorEl,
       'GetAllProfiles' 
     ]
   });
-
-  console.log(selectedProfile);
-
   
-
   // Edit profile
 
   const [updateProfile] = useMutation(updateProfileMutation, {
@@ -38,15 +34,16 @@ export default function Profilemodal( { handleOpen, handleClose, open, anchorEl,
 
   const handleSubmit = () => {
 
-    console.log(newProfile);
-
     if (!anchorEl) {
       addProfile({
         variables: newProfile
       })
+
       if (error) {
         console.log(error);
       }
+
+      handleCloseCreate();
       return
     }
 
@@ -62,7 +59,7 @@ export default function Profilemodal( { handleOpen, handleClose, open, anchorEl,
       }
     })
     
-    handleClose();
+    handleCloseCreate();
   }
 
   // form input
@@ -96,7 +93,7 @@ export default function Profilemodal( { handleOpen, handleClose, open, anchorEl,
   return (
     <Modal
       open={open}
-      onClose={handleClose}
+      onClose={handleCloseCreate}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
       >
@@ -114,7 +111,7 @@ export default function Profilemodal( { handleOpen, handleClose, open, anchorEl,
 
           {anchorEl ? "Edit profile" : "Create Profile" }
 
-          <CloseIcon onClick={handleClose}/>
+          <CloseIcon onClick={handleCloseCreate}/>
         </Typography>
 
         
