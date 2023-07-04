@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
-import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TableFooter, TablePagination, TableRow, TableSortLabel, Paper } from '@mui/material';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableFooter, TablePagination, TableRow, TableSortLabel, Paper } from '@mui/material';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { GetAllProfiles } from './Table';
 import DeleteModal from './DeleteModal';
@@ -62,9 +62,11 @@ function App() {
 
   // Delete
   const handleOpenDelete = () => {setOpenDelete(true);};
+
   const handleCloseDelete = () => {
     setOpenDelete(false);
     setAnchorEl(null);
+    setSelectedProfile(null);
   };
 
   // Settings
@@ -152,8 +154,22 @@ function App() {
         handleSearchInput={handleSearchInput}
         />
         
-        <TableContainer component={Paper} className="listView">
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <TableContainer 
+        component={Paper} 
+        // className="listView"
+        sx={{ 
+          marginBottom: "30px",
+          width: "80%",
+          marginLeft: "auto",
+          marginRight: "auto"
+         }} 
+        >
+        <Table 
+        sx={{ 
+          minWidth: 650
+         }} 
+        aria-label="simple table"
+        >
           <TableHead>
             <TableRow>
               <TableCell> Name </TableCell>
@@ -167,8 +183,18 @@ function App() {
                   Email 
                 </TableSortLabel>
               </TableCell>
-              <TableCell> Description </TableCell>
-              <TableCell> <SettingsIcon /> </TableCell>
+              <TableCell
+              sx={{ 
+                minWidth: 400
+               }}
+              > Description </TableCell>
+              <TableCell
+              sx={{
+                textAlign: "center"
+              }}
+              > 
+              <SettingsIcon /> 
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

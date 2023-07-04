@@ -13,15 +13,16 @@ export default function Searchbar( { openCreate, setOpenCreate, handleOpenCreate
 
   return (
     <div className="searchBar">
-      <Box
+      {/* <Box
         component="form"
         sx={{
-          '& > :not(style)': { m: 1, width: '25ch' }
+          '& > :not(style)': { 
+            m: 1, }
         }}
         noValidate
         autoComplete="off"
       >
-      </Box>
+      </Box> */}
 
       <TextField 
       id="search" 
@@ -29,7 +30,6 @@ export default function Searchbar( { openCreate, setOpenCreate, handleOpenCreate
       variant="outlined" 
       className="searchBox" 
       onChange={handleSearchInput}
-      
       />
 
       <Button 

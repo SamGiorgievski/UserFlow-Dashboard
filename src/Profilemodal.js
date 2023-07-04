@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Box, Typography, Modal, TextField, Switch, Grid, Button } from '@mui/material';
+import { Box, Typography, Modal, TextField, Switch, Grid, Button, FormControlLabel } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import createProfileMutation from './helpers/createProfile';
 import updateProfileMutation from './helpers/updateProfile';
@@ -10,7 +10,7 @@ import { getProfiles } from './helpers/getAllProfiles';
 export default function Profilemodal( { handleOpen, handleClose, open, anchorEl, selectedProfile}) {
 
   const [newProfile, setNewProfile] = React.useState({
-    isVerified: true
+    isVerified: false
   });
 
   // Create profile
@@ -20,6 +20,21 @@ export default function Profilemodal( { handleOpen, handleClose, open, anchorEl,
       'GetAllProfiles' 
     ]
   });
+
+  console.log(selectedProfile);
+
+  
+
+  // Edit profile
+
+  const [updateProfile] = useMutation(updateProfileMutation, {
+    refetchQueries: [
+      getProfiles, // DocumentNode object parsed with gql
+      'GetAllProfiles' 
+    ]
+  });
+
+  // Submit
 
   const handleSubmit = () => {
 
@@ -47,37 +62,23 @@ export default function Profilemodal( { handleOpen, handleClose, open, anchorEl,
       }
     })
     
-
     handleClose();
   }
 
-  // Edit profile
-
-  const [updateProfile] = useMutation(updateProfileMutation, {
-    refetchQueries: [
-      getProfiles, // DocumentNode object parsed with gql
-      'GetAllProfiles' 
-    ]
-  });
-
+  // form input
 
   function handleModalInput(e) {
     e.preventDefault();
+    console.log(e.target.value);
+    console.log(e)
 
     const { name, value } = e.target;
     setNewProfile((prev) => ({
       ...prev,
       [name]: value,
     }))
-
-    console.log(newProfile);
   }
 
-
-
-  
-  
-  const label = { inputProps: { 'aria-label': 'Switch demo' } };
 
   const style = {
     position: 'absolute',
@@ -178,15 +179,22 @@ export default function Profilemodal( { handleOpen, handleClose, open, anchorEl,
           <Box sx={{
             display: 'flex',
             justifyContent: 'space-between',
+            alignItems: "center"
         }} >
             <TextField
               disabled
               id="outlined-disabled"
               label="Verification"
-              defaultValue="Talent is verified"
               fullWidth
-            /> 
-            <Switch {...label} defaultChecked />
+              defaultValue={
+                selectedProfile ? 
+                ( selectedProfile.is_verified ? "Talent is verified" : "Talent is not verified")
+                : "Talent is not verified"}
+              /> 
+                <Switch 
+                defaultChecked={selectedProfile ? selectedProfile.is_verified : false}
+                disabled
+                />
           </Box>
         </Grid>
       </Grid>

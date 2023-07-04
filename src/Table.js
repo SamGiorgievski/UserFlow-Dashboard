@@ -67,8 +67,14 @@ function getComparator (order, orderBy) {
       last_name, __typename
   }) => (
     <TableRow key={id}>
-      <TableCell>
-        <Avatar src={image_url}/>
+      <TableCell
+        sx={{
+  
+        }}
+      >
+        <Avatar 
+        src={image_url}
+        />
         {`${first_name} ${last_name}`}
       </TableCell>
       <TableCell>{id}</TableCell>
@@ -82,21 +88,21 @@ function getComparator (order, orderBy) {
         aria-expanded={open ? 'true' : undefined}
         onClick={handleSettingsOpen}
         >
-          Settings
-          </Button>
+          <MoreVertIcon />
+        </Button>
           
-            <Menu
-            id="basic-menu" 
-            anchorEl={anchorEl}
-            open={Boolean(anchorEl)}
-            onClose={handleSettingsClose}
-            MenuListProps={{
-              'aria-labelledby': 'basic-button',
-            }}
-            >
-              <MenuItem onClick={handleOpenCreate}> Edit </MenuItem>
-              <MenuItem onClick={handleOpenDelete}> Delete </MenuItem>
-            </Menu>
+          <Menu
+          id="basic-menu" 
+          anchorEl={anchorEl}
+          open={Boolean(anchorEl)}
+          onClose={handleSettingsClose}
+          MenuListProps={{
+            'aria-labelledby': 'basic-button',
+          }}
+          >
+            <MenuItem onClick={handleOpenCreate}> Edit </MenuItem>
+            <MenuItem onClick={handleOpenDelete}> Delete </MenuItem>
+          </Menu>
           
            
         </TableCell>
