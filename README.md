@@ -2,7 +2,7 @@
 
 Welcome to my UserFlow Dashboard project! This project demonstrates my skills as a junior full stack developer, showcasing my ability to develop a React.js application UI that allows CRUD operations on user profiles based on a Figma design with additional features such as dark theme, pagination, sorting, and searching (with debounce) functionality.
 
-![alt text](https://github.com/samgiorgievski/UserFlow-dashboard/blob/main/screenshot.png?raw=true)
+![alt text](https://github.com/samgiorgievski/UserFlow-dashboard/blob/main/public/screenshot.png?raw=true)
 
 ## Project Overview
 
